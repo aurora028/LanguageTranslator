@@ -36,13 +36,16 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton translateBtn;
     private TextView translatedTV;
 
-    String text;
+    String text, p;
 
-    String[] fromLanguages = {"From", "English", "Afrikaans", "Arabic", "Belarusian", "Bulgarian", "Bengali", "Catalan", "Czech",
-    "Welsh", "Hindi", "Urdu"};
+//    String[] fromLanguages = {"From", "English", "Arabic", "Bengali", "Chinese", "Dutch", "French", "German", "Greek", "Gujarati",
+//            "Hindi", "Italian", "Japanese", "Kannada", "Korean", "Marathi", "Spanish", "Urdu"};
 
-    String[] toLanguages = {"To", "English", "Afrikaans", "Arabic", "Belarusian", "Bulgarian", "Bengali", "Catalan", "Czech",
-            "Welsh", "Hindi", "Urdu"};
+    //String[] toLanguages = {"To", "English", "Afrikaans", "Arabic", "Belarusian", "Bulgarian", "Bengali", "Chinese", "French",
+            //"German", "Hindi", "Japanese", "Korean", "Urdu"};
+
+    String[] toLanguages = {"To", "Arabic", "Bengali", "Chinese", "Dutch", "French", "German", "Greek", "Gujarati",
+            "Hindi", "Italian", "Japanese", "Kannada", "Korean", "Marathi", "Spanish", "Urdu"};
 
     private static final int REQUEST_PERMISSION_CODE = 1;
     int languageCode, fromLanguageCode, tolanguageCode = 0;
@@ -53,28 +56,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fromSpinner = findViewById(R.id.idFromSpinner);
+        //fromSpinner = findViewById(R.id.idFromSpinner);
         toSpinner = findViewById(R.id.idToSpinner);
         sourceEdt = findViewById(R.id.idEdtSource);
         micIV = findViewById(R.id.idIVMic);
         translateBtn = findViewById(R.id.idBtnTranslate);
         translatedTV = findViewById(R.id.idTVTranslatedTV);
 
-        fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                fromLanguageCode = getLanguageCode(fromLanguages[position]);
-            }
+//        fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+//                fromLanguageCode = getLanguageCode(fromLanguages[position]);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        ArrayAdapter fromAdapter = new ArrayAdapter(this, R.layout.spinner_item, fromLanguages);
-        fromAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        fromSpinner.setAdapter(fromAdapter);
+//        ArrayAdapter fromAdapter = new ArrayAdapter(this, R.layout.spinner_item, fromLanguages);
+//        fromAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        fromSpinner.setAdapter(fromAdapter);
 
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -92,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         toAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         toSpinner.setAdapter(toAdapter);
 
+        fromLanguageCode = FirebaseTranslateLanguage.EN;
+
 
         translateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     translateText(fromLanguageCode, tolanguageCode, sourceEdt.getText().toString());
                     text = sourceEdt.getText().toString();
-                    Intent result = new Intent(MainActivity.this, MainActivity2.class);
-                    result.putExtra("key", text);
-                    startActivity(result);
+//                    Intent result = new Intent(MainActivity.this, MainActivity2.class);
+//                    result.putExtra("key", text);
+//
                 }
             }
         });
@@ -163,7 +168,14 @@ public class MainActivity extends AppCompatActivity {
                 translator.translate(source).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String s) {
-                        translatedTV.setText(s);
+//                        translatedTV.setText(s);
+//                        p = translatedTV.getText().toString();
+//                        Intent output = new Intent(MainActivity.this, MainActivity2.class);
+                        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                        intent.putExtra("key", text);
+                        intent.putExtra("done", s);
+                        startActivity(intent);
+//                        startActivity(result);
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -188,29 +200,50 @@ public class MainActivity extends AppCompatActivity {
             case "English":
                 languageCode = FirebaseTranslateLanguage.EN;
                 break;
-            case "Afrikaans":
-                languageCode = FirebaseTranslateLanguage.AF;
-                break;
             case "Arabic":
                 languageCode = FirebaseTranslateLanguage.AR;
-                break;
-            case "Belarusian":
-                languageCode = FirebaseTranslateLanguage.BE;
                 break;
             case "Bengali":
                 languageCode = FirebaseTranslateLanguage.BN;
                 break;
-            case "Catalan ":
-                languageCode = FirebaseTranslateLanguage.CA;
+            case "Chinese":
+                languageCode = FirebaseTranslateLanguage.ZH;
                 break;
-            case "Czech":
-                languageCode = FirebaseTranslateLanguage.CS;
+            case "Dutch":
+                languageCode = FirebaseTranslateLanguage.NL;
                 break;
-            case "Welsh":
-                languageCode = FirebaseTranslateLanguage.CY;
+            case "French":
+                languageCode = FirebaseTranslateLanguage.FR;
+                break;
+            case "German":
+                languageCode = FirebaseTranslateLanguage.DE;
+                break;
+            case "Greek":
+                languageCode = FirebaseTranslateLanguage.EL;
+                break;
+            case "Gujarati":
+                languageCode = FirebaseTranslateLanguage.GU;
                 break;
             case "Hindi":
                 languageCode = FirebaseTranslateLanguage.HI;
+                break;
+            case "Italian":
+                languageCode = FirebaseTranslateLanguage.IT;
+                break;
+            case "Japanese":
+                languageCode = FirebaseTranslateLanguage.JA;
+                break;
+            case "Kannada":
+                languageCode = FirebaseTranslateLanguage.KN;
+                break;
+            case "Korean":
+                languageCode = FirebaseTranslateLanguage.KO;
+                break;
+            case "Marathi":
+                languageCode = FirebaseTranslateLanguage.MR;
+                break;
+            case "Spanish":
+                languageCode = FirebaseTranslateLanguage.ES;
                 break;
             case "Urdu":
                 languageCode = FirebaseTranslateLanguage.UR;
