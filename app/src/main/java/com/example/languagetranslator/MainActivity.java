@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton translateBtn;
     private TextView translatedTV;
 
-    String text, p;
+    String text;
+    String p;
 
 //    String[] fromLanguages = {"From", "English", "Arabic", "Bengali", "Chinese", "Dutch", "French", "German", "Greek", "Gujarati",
 //            "Hindi", "Italian", "Japanese", "Kannada", "Korean", "Marathi", "Spanish", "Urdu"};
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 tolanguageCode = getLanguageCode(toLanguages[position]);
+                p = toLanguages[position];
             }
 
             @Override
@@ -174,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                         intent.putExtra("key", text);
                         intent.putExtra("done", s);
+                        intent.putExtra("token", p);
                         startActivity(intent);
 //                        startActivity(result);
 
